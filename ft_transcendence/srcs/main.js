@@ -1,24 +1,41 @@
 import './style.css'
-import javascriptLogo from './assets/javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from '../counter.js'
+import { Canvas } from "./class/Canvas.js";
+import { Scene, Rectangle } from "./class/Scene.js";
+import { githubVersion } from "./tools/githubAPI.js";
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+function mainGame() {
 
-setupCounter(document.querySelector('#counter'))
+  // Setup
+  const canvas = new Canvas();
+  const scene = new Scene({ canvas: canvas.canvas, ctx: canvas.ctx });
+  
+  const rect = new Rectangle(50, 50, 50, 50, '#3B3979');
+  window.addEventListener('resize', () => { canvas.run()});  
+
+  scene.addElement(rect); 
+  scene.setBackground('white');
+  scene.run();
+
+  // Game loop
+  const gameLoop = () => {
+    rect.setSize({ width: canvas.size.x / 70, height: canvas.size.y / 2.5});
+    rect.setPosition({ x: canvas.size.x / 70, y: canvas.size.y / 2 - rect.y / 2});
+    scene.run();
+    requestAnimationFrame(gameLoop);
+  }
+
+  // Start the game loop
+  requestAnimationFrame(gameLoop);
+}
+
+
+// Main
+document.addEventListener('DOMContentLoaded', () => { 
+  mainGame()
+  githubVersion();
+});
+
+
+
+
+
