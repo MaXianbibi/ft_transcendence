@@ -12,16 +12,36 @@ function githubVersion() {
             .then(data => {
 
                 console.log(data);
-                const numberOfCommits = data.parents.length + 1;
+                const total = data.stats.total;
                 const commitMessage = data.commit.message;
                 const commitAuthor = data.commit.author.name;
                 const commitDate = data.commit.author.date;
+
+                let value = "";
+                if (total < 1) {
+                    value = "sert a rien";
+                }
+                else if (total > 1 && total < 10) {
+                    value = "merdique";
+                }
+                else if (total > 10 && total < 50) {
+                    value = "pas mal";
+                }
+                else if (total > 50 && total < 100) {
+                    value = "bien";
+                }
+                else if (total > 100 && total < 500) {
+                    value = "excellent";
+                }
+                else if (total > 500) {
+                    value = "GOAT";
+                }
 
                 const commitDetails = `last commit on : (${branch}):<br>
                                         The dude: ${commitAuthor}<br>
                                         Message: ${commitMessage}<br>
                                         Date: ${commitDate}<br>
-                                        Number of commits : ${numberOfCommits}`;
+                                        Qualite du commit : ${value}`;
 
                 // Afficher les détails du dernier commit dans la div avec l'id "commitDetails"
                 document.getElementById('githubInfo').innerHTML = commitDetails;
