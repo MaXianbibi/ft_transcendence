@@ -10,6 +10,9 @@ function githubVersion() {
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
+
+                console.log(data);
+                const numberOfCommits = data.parents.length + 1;
                 const commitMessage = data.commit.message;
                 const commitAuthor = data.commit.author.name;
                 const commitDate = data.commit.author.date;
@@ -17,7 +20,8 @@ function githubVersion() {
                 const commitDetails = `last commit on : (${branch}):<br>
                                         The dude: ${commitAuthor}<br>
                                         Message: ${commitMessage}<br>
-                                        Date: ${commitDate}`;
+                                        Date: ${commitDate}<br>
+                                        Number of commits : ${numberOfCommits}`;
 
                 // Afficher les détails du dernier commit dans la div avec l'id "commitDetails"
                 document.getElementById('githubInfo').innerHTML = commitDetails;
