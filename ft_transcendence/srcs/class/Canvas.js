@@ -19,16 +19,14 @@ class Canvas {
     resize() {
         this._size = vec2(this._container.clientWidth, this._container.clientHeight);
     
-        // Limite de la largeur
         if (this._size.x > 900) this._size.x = 900;
     
-        // Calcul initial de la hauteur en fonction de la largeur et du ratio
         this._size.y = this._size.x / this.ratio;
     
-        // Si la hauteur calculée est supérieure à la hauteur disponible, ajustez la largeur
+       
         if (this._size.y > this._container.clientHeight) {
             this._size.y = this._container.clientHeight;
-            this._size.x = this._size.y * this.ratio; // Maintenir le ratio en ajustant la largeur
+            this._size.x = this._size.y * this.ratio; 
         }
     
         this._canvas.width = this._size.x;
@@ -40,7 +38,14 @@ class Canvas {
 
         
         elements.forEach(element => {
-            element.setPosition({ x: this.size.x / 70, y: this.size.y / 2 - element.height / 2});
+
+            if (element.offset != 0){
+                element.offset = this.size.x - this.size.x / 70 * 3; // je sais franchement pas 3 mais ça marche // a non je sais jcrois
+            }
+
+            element.rect.setSize({ width: this.size.x / 70, height: this.size.y / 2 });
+            element.rect.setPosition({ x: this.size.x / 70 + element.offset, y: this.size.y / 2 - element.rect.height / 2 });
+    
         });
 
     }

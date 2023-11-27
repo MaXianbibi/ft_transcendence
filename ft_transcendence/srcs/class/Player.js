@@ -1,12 +1,22 @@
 import { Rectangle } from './Scene'
 
 class Player {
-    constructor({ canvas }) {
+    constructor({ canvas, x }) {
+
+
+
         this.rect = new Rectangle(50, 50, 50, 50, '#3B3979');
         this.score = 0;
-        this.heig
-        this.rect.setSize({ width: canvas.size.x / 70, height: canvas.size.y / 1.5 });
-        this.rect.setPosition({ x: canvas.size.x / 70, y: canvas.size.y / 2 - this.rect.height / 3 });
+        
+        this.offset = x;
+
+        this.rect.setSize({ width: canvas.size.x / 70, height: canvas.size.y / 2 });
+        this.rect.setPosition({ x: canvas.size.x / 70 + this.offset, y: canvas.size.y / 2 - this.rect.height / 2 });
+        
+
+        console.log(this);
+
+        this.sceneSize = canvas.size;
     }
 
     updateScore() {
@@ -14,11 +24,11 @@ class Player {
     }
 
     moveUp() {
-        this.rect.move({ x: 0, y: -10 });
+        if (this.rect.y > 20) this.rect.move({ x: 0, y: -10 });
     }
 
     moveDown() {
-        this.rect.move({ x: 0, y: 10 });
+        if (this.rect.y + this.rect.height < this.sceneSize.y - 20) this.rect.move({ x: 0, y: 10 });
     }
 
 

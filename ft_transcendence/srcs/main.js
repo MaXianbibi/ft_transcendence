@@ -14,16 +14,19 @@ function setupGame({ scene, canvas, rect }) {
   canvas.resize();
   scene.setBackground('white');
   scene.run();
-  
+
   // INIT PLAYER 
 
-  const player = new Player( { canvas } );
+  const player = new Player({ canvas, x: 0 });
+  
+  const player2 = new Player({ canvas, x: canvas.size.x - canvas.size.x / 70 - canvas.size.x / 70 - 10});
 
   let keys = ['ArrowUp', 'ArrowDown'];
-  player.keySetup({ keyPressed : keysPressed, listofKeys: keys });;
+  player.keySetup({ keyPressed: keysPressed, listofKeys: keys });;
 
 
-    scene.addElement(player);
+  scene.addElement(player);
+  scene.addElement(player2);
 
 
   // EVENT LISTENERS
@@ -33,13 +36,13 @@ function setupGame({ scene, canvas, rect }) {
   window.addEventListener('keydown', (event) => {
     event.preventDefault()
     if (keysPressed[event.key] === undefined) return;
-      keysPressed[event.key].keyUp = true;
+    keysPressed[event.key].keyUp = true;
   });
-  
+
   window.addEventListener('keyup', (event) => {
     event.preventDefault()
     if (keysPressed[event.key] === undefined) return;
-      keysPressed[event.key].keyUp = false;
+    keysPressed[event.key].keyUp = false;
 
   });
 
@@ -58,10 +61,7 @@ function mainGame() {
 
   // INIT AND SETUP GAME
   const [scene, canvas] = initGame();
-  setupGame({ scene, canvas});
-
-  // 
-
+  setupGame({ scene, canvas });
 
 
   // GAME LOOP
@@ -71,21 +71,12 @@ function mainGame() {
 
     for (let key in keysPressed) {
       if (keysPressed.hasOwnProperty(key)) {
-          let element = keysPressed[key];
-          if (element.keyUp) {
-              element.funct();
-          }
+        let element = keysPressed[key];
+        if (element.keyUp) {
+          element.funct();
+        }
       }
-  }
-
-
-    // if (keysPressed['ArrowUp'].keyUp) {
-    //   keysPressed['ArrowUp'].func();
-    // }
-    // if (keysPressed['ArrowDown'].keyUp) {
-    //   keysPressed['ArrowDown'].func();
-    // }
-
+    }
     scene.run();
     requestAnimationFrame(gameLoop);
   }
