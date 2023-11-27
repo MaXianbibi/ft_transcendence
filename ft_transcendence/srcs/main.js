@@ -1,13 +1,11 @@
 import './style.css'
 import { Canvas } from "./class/Canvas.js";
-import { Scene, Rectangle } from "./class/Scene.js";
+import { Scene, Circle } from "./class/Scene.js";
 import { githubVersion } from "./tools/githubAPI.js";
 import { Player } from "./class/Player.js";
+import { Ball } from './class/Balls.js';
 
 let keysPressed = {};
-
-
-
 
 function setupGame({ scene, canvas, rect }) {
 
@@ -18,25 +16,41 @@ function setupGame({ scene, canvas, rect }) {
   // INIT PLAYER 
 
   const player = new Player({ canvas, x: 0 });
-  
-  const player2 = new Player({ canvas, x: canvas.size.x - canvas.size.x / 70 - canvas.size.x / 70 - 10});
+  const player2 = new Player({ canvas, x: canvas.size.x - canvas.size.x / 70 - canvas.size.x / 70 - 10 });
 
-  let keys = ['ArrowUp', 'ArrowDown'];
+  let keys = ['w', 's'];
   player.keySetup({ keyPressed: keysPressed, listofKeys: keys });;
 
+  keys = ['ArrowUp', 'ArrowDown'];
+  player2.keySetup({ keyPressed: keysPressed, listofKeys: keys });;
 
+  // INIT BALL
+
+  // const ball 
+  const ball = new Ball({ canvas });
+
+
+
+  scene.addObjects(ball.circle);
   scene.addElement(player);
   scene.addElement(player2);
 
 
   // EVENT LISTENERS
 
-  window.addEventListener('resize', () => { canvas.run({ elements: scene.elements }) });
+  window.addEventListener('resize', () => { canvas.run({ elements: scene.elements, objects : scene.objects }) });
 
   window.addEventListener('keydown', (event) => {
     event.preventDefault()
+
+    if (event.key === ' ') {
+      scene.gameOn = !scene.gameOn;
+      return;
+    }
+
     if (keysPressed[event.key] === undefined) return;
     keysPressed[event.key].keyUp = true;
+
   });
 
   window.addEventListener('keyup', (event) => {
@@ -45,6 +59,8 @@ function setupGame({ scene, canvas, rect }) {
     keysPressed[event.key].keyUp = false;
 
   });
+
+  return ball;
 
 }
 
@@ -61,25 +77,30 @@ function mainGame() {
 
   // INIT AND SETUP GAME
   const [scene, canvas] = initGame();
-  setupGame({ scene, canvas });
+  const ball = setupGame({ scene, canvas });
 
 
   // GAME LOOP
   const gameLoop = () => {
     // rect.setSize({ width: canvas.size.x / 70, height: canvas.size.y / 2.5 });
+    if (scene.gameOn) {
 
-
-    for (let key in keysPressed) {
-      if (keysPressed.hasOwnProperty(key)) {
-        let element = keysPressed[key];
-        if (element.keyUp) {
-          element.funct();
+      for (let key in keysPressed) {
+        if (keysPressed.hasOwnProperty(key)) {
+          let element = keysPressed[key];
+          if (element.keyUp) {
+            element.funct();
+          }
         }
       }
+      ball.run();
+      
     }
     scene.run();
     requestAnimationFrame(gameLoop);
   }
+
+
   requestAnimationFrame(gameLoop);
 
 

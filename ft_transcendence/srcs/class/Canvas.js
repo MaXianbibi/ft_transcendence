@@ -1,4 +1,4 @@
-import { Rectangle, DrawableElement } from "./Scene";
+import { Rectangle } from "./Scene";
 
 function vec2(x, y) {
     return { x: x, y: y };
@@ -33,20 +33,25 @@ class Canvas {
         this._canvas.height = this._size.y;
     }
     
-    run({ elements }) {
+    run({ elements, objects }) {
         this.resize()    
 
         
         elements.forEach(element => {
+            element.sceneSize = this.size;
 
             if (element.offset != 0){
                 element.offset = this.size.x - this.size.x / 70 * 3; // je sais franchement pas 3 mais ça marche // a non je sais jcrois
             }
-
             element.rect.setSize({ width: this.size.x / 70, height: this.size.y / 2 });
             element.rect.setPosition({ x: this.size.x / 70 + element.offset, y: this.size.y / 2 - element.rect.height / 2 });
-    
         });
+
+        objects.forEach(object => {
+            object.setSize({width : this.size.x * 0.012});
+            object.setPosition({ x: this.size.x / 2 - object.radius / 2, y: this.size.y / 2 - object.radius / 2 });
+        });
+
 
     }
 

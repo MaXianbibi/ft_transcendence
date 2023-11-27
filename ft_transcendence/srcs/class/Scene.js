@@ -3,17 +3,12 @@ class Scene {
 
         this.canvas = canvas;
         this.ctx = ctx;
-        this.elements = [];
-
-        this.margin = 5;
-
-        this.sceneSize = { topLeft : {x : this.margin, y: this.margin},
-                            bottomLeft : {x : this.margin, y: this.canvas.height - this.margin},
-                            topRight : {x : this.canvas.width - this.margin, y: this.margin},
-                            bottomRight : {x : this.canvas.width - this.margin, y: this.canvas.height - this.margin}
-                        };
-
+        this.elements = []; // player
+        this.objects = []; // other
         this.backgroundColor = "white";
+
+        this.gameOn = false;
+
     }
 
     setBackground(color) {
@@ -22,6 +17,10 @@ class Scene {
 
     addElement(element) {
         this.elements.push(element);
+    }
+
+    addObjects(object) {
+        this.objects.push(object);
     }
 
     draw() {
@@ -34,6 +33,13 @@ class Scene {
                 element.rect.draw(this.ctx);
             }
         }
+
+        for (let object of this.objects) {
+            if (typeof object.draw === 'function') {
+                object.draw(this.ctx);
+            }
+        }
+
     }
 
     run() {
@@ -83,6 +89,33 @@ class Rectangle extends DrawableElement {
         this.y = y;
     }
 }
+class Circle extends DrawableElement
+{
+    constructor(x, y, width, color) {
+        super(x, y);
+        this.radius = width
+        this.color = color;
+    }
+
+    draw(ctx) {
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI); // Crée un arc/cercle
+
+        ctx.fillStyle = this.color; // Couleur de remplissage
+        ctx.fill(); // Remplit le cercle
+
+    }
+
+    setSize({ width}) {
+        this.radius = width;
+    }
+
+    setPosition({ x, y }) {
+        this.x = x;
+        this.y = y;
+    }
+}
 
 // Exemple d'utilisation
-export { Scene, Rectangle, DrawableElement };
+export { Scene, Rectangle, Circle };
