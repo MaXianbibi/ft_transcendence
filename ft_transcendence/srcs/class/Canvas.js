@@ -1,3 +1,5 @@
+import { Rectangle, DrawableElement } from "./Scene";
+
 function vec2(x, y) {
     return { x: x, y: y };
 }
@@ -9,26 +11,38 @@ class Canvas {
         this._ctx = this._canvas.getContext('2d');
         this._size = vec2(this._container.clientWidth, this._container.clientHeight);
 
-        this.resize();
+        this.ratio = 4 / 3;
+        
+
     }
     
     resize() {
-
         this._size = vec2(this._container.clientWidth, this._container.clientHeight);
-        if (this._size.x > 700) this._size.x = 700;
-        if (this._size.y > 700) this._size.y = 700;
-        if (this._size.x > this._size.y) {
-            this._size.x = this._size.y;
-        } else if (this._size.y > this._size.x) {
-            this._size.y = this._size.x;
+    
+        // Limite de la largeur
+        if (this._size.x > 900) this._size.x = 900;
+    
+        // Calcul initial de la hauteur en fonction de la largeur et du ratio
+        this._size.y = this._size.x / this.ratio;
+    
+        // Si la hauteur calculée est supérieure à la hauteur disponible, ajustez la largeur
+        if (this._size.y > this._container.clientHeight) {
+            this._size.y = this._container.clientHeight;
+            this._size.x = this._size.y * this.ratio; // Maintenir le ratio en ajustant la largeur
         }
-
+    
         this._canvas.width = this._size.x;
         this._canvas.height = this._size.y;
     }
-
-    run() {
+    
+    run({ elements }) {
         this.resize()    
+
+        
+        elements.forEach(element => {
+            element.setPosition({ x: this.size.x / 70, y: this.size.y / 2 - element.height / 2});
+        });
+
     }
 
     get canvas() {

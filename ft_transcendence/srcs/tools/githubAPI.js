@@ -7,11 +7,17 @@ function githubVersion() {
 
         const apiUrl = `https://api.github.com/repos/${owner}/${repo}/commits/${branch}`;
 
+
+        // let doc = document.getElementById('githubInfo').innerHTML;
+
+        // doc = "yoo"
+
+
+        // sleep(1000)
+
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-
-                console.log(data);
                 const total = data.stats.total;
                 const commitMessage = data.commit.message;
                 const commitAuthor = data.commit.author.name;

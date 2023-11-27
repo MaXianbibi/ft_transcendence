@@ -2,40 +2,125 @@ import './style.css'
 import { Canvas } from "./class/Canvas.js";
 import { Scene, Rectangle } from "./class/Scene.js";
 import { githubVersion } from "./tools/githubAPI.js";
+import { Player } from "./class/Player.js";
 
-function mainGame() {
+let keysPressed = {};
 
-  // Setup
-  const canvas = new Canvas();
-  const scene = new Scene({ canvas: canvas.canvas, ctx: canvas.ctx });
-  
-  const rect = new Rectangle(50, 50, 50, 50, '#3B3979');
-  window.addEventListener('resize', () => { canvas.run()});  
 
-  scene.addElement(rect); 
+
+
+function setupGame({ scene, canvas, rect }) {
+
+  canvas.resize();
   scene.setBackground('white');
   scene.run();
+  
+  // INIT PLAYER 
 
-  // Game loop
-  const gameLoop = () => {
-    rect.setSize({ width: canvas.size.x / 70, height: canvas.size.y / 2.5});
-    rect.setPosition({ x: canvas.size.x / 70, y: canvas.size.y / 2 - rect.y / 2});
-    scene.run();
-    requestAnimationFrame(gameLoop);
-  }
+  const player = new Player( { canvas } );
 
-  // Start the game loop
-  requestAnimationFrame(gameLoop);
+  let keys = ['ArrowUp', 'ArrowDown'];
+  player.keySetup({ keyPressed : keysPressed, listofKeys: keys });;
+
+
+    scene.addElement(player);
+
+
+  // EVENT LISTENERS
+
+  window.addEventListener('resize', () => { canvas.run({ elements: scene.elements }) });
+
+  window.addEventListener('keydown', (event) => {
+    event.preventDefault()
+    if (keysPressed[event.key] === undefined) return;
+      keysPressed[event.key].keyUp = true;
+  });
+  
+  window.addEventListener('keyup', (event) => {
+    event.preventDefault()
+    if (keysPressed[event.key] === undefined) return;
+      keysPressed[event.key].keyUp = false;
+
+  });
+
+}
+
+function initGame() {
+  const canvas = new Canvas();
+  const scene = new Scene({ canvas: canvas.canvas, ctx: canvas.ctx });
+
+
+  return [scene, canvas];
 }
 
 
-// Main
-document.addEventListener('DOMContentLoaded', () => { 
-  mainGame()
+function mainGame() {
+
+  // INIT AND SETUP GAME
+  const [scene, canvas] = initGame();
+  setupGame({ scene, canvas});
+
+  // 
+
+
+
+  // GAME LOOP
+  const gameLoop = () => {
+    // rect.setSize({ width: canvas.size.x / 70, height: canvas.size.y / 2.5 });
+
+
+    for (let key in keysPressed) {
+      if (keysPressed.hasOwnProperty(key)) {
+          let element = keysPressed[key];
+          if (element.keyUp) {
+              element.funct();
+          }
+      }
+  }
+
+
+    // if (keysPressed['ArrowUp'].keyUp) {
+    //   keysPressed['ArrowUp'].func();
+    // }
+    // if (keysPressed['ArrowDown'].keyUp) {
+    //   keysPressed['ArrowDown'].func();
+    // }
+
+    scene.run();
+    requestAnimationFrame(gameLoop);
+  }
+  requestAnimationFrame(gameLoop);
+
+
+
+
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  mainGame();
   githubVersion();
+
+  let loaded = false;
+  let minimumTimeMet = false;
+
+  setTimeout(() => {
+    minimumTimeMet = true;
+    if (loaded) fadeOutLoadingScreen();
+  }, 1000);
+
+  window.onload = function () {
+    loaded = true;
+    if (minimumTimeMet) fadeOutLoadingScreen();
+  };
 });
 
+function fadeOutLoadingScreen() {
+  const loadingScreen = document.getElementById('loadingScreen');
+  loadingScreen.style.opacity = '0';
 
-
+  setTimeout(() => {
+    loadingScreen.style.display = 'none';
+  }, 250);
+}
 
 

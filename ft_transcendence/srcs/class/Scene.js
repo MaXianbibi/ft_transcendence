@@ -5,6 +5,14 @@ class Scene {
         this.ctx = ctx;
         this.elements = [];
 
+        this.margin = 5;
+
+        this.sceneSize = { topLeft : {x : this.margin, y: this.margin},
+                            bottomLeft : {x : this.margin, y: this.canvas.height - this.margin},
+                            topRight : {x : this.canvas.width - this.margin, y: this.margin},
+                            bottomRight : {x : this.canvas.width - this.margin, y: this.canvas.height - this.margin}
+                        };
+
         this.backgroundColor = "white";
     }
 
@@ -22,8 +30,8 @@ class Scene {
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         for (let element of this.elements) {
-            if (typeof element.draw === 'function') {
-                element.draw(this.ctx);
+            if (typeof element.rect.draw === 'function') {
+                element.rect.draw(this.ctx);
             }
         }
     }
@@ -38,6 +46,11 @@ class DrawableElement {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+    }
+
+    move({ x, y }) {
+        this.x += x;
+        this.y += y;
     }
 
     draw(ctx) {
@@ -72,4 +85,4 @@ class Rectangle extends DrawableElement {
 }
 
 // Exemple d'utilisation
-export { Scene, Rectangle };
+export { Scene, Rectangle, DrawableElement };

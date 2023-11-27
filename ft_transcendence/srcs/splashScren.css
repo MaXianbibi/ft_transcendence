@@ -1,0 +1,17 @@
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #504C97;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+
+    transition: opacity 0.25s ease-out; 
+    opacity: 1; 
+
+}
