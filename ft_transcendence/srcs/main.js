@@ -31,7 +31,7 @@ function setupGame({ scene, canvas, rect }) {
 
 
 
-  scene.addObjects(ball.circle);
+  scene.addObjects(ball);
   scene.addElement(player);
   scene.addElement(player2);
 

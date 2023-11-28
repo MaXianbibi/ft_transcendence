@@ -6,12 +6,11 @@ class Player {
         this.score = 0;
         
         this.offset = x;
-        this.rect.setSize({ width: canvas.size.x / 70, height: canvas.size.y / 2 });
-        this.rect.setPosition({ x: canvas.size.x / 70 + this.offset, y: canvas.size.y / 2 - this.rect.height / 2 });
+        this.rect.setSize({ width: canvas.size.x / 70, height: canvas.size.y / 3 });
+        this.rect.setPosition({ x: canvas.size.x / 70 + this.offset, y: canvas.size.y / 2 - this.rect.height / 3 });
         this.sceneSize = canvas.size;
 
         this.marginRatio =  0.0315 ;
-        console.log(this.marginRatio);
 
     }
 

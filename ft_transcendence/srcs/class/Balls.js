@@ -8,15 +8,14 @@ function getRandomInt(min, max) {
 
 class Ball {
     constructor({canvas}) {
-
-        console.log(canvas.size.x * 0.012);
-
         this.circle = new Circle(canvas.size.x / 2 - 10 / 2, canvas.size.y / 2 - 10 / 2, canvas.size.x * 0.012, '#3B3979');
         this.velocity = { x: 1, y: 0 };
 
+
+
         if (getRandomInt(0, 2) == 0) this.velocity.x = -1;
 
-
+        this.sceneSize = canvas.size; 
         this.speed = 1;
     }
 
@@ -26,9 +25,19 @@ class Ball {
     }
 
     run () {
-        // if ()
-
         this.move();
+    }
+
+    get getCircle() {
+        return this.circle;
+    }
+
+
+    reset() {
+        this.circle.setPosition({ x: this.sceneSize.x / 2 - this.circle.radius / 2, y: this.sceneSize.y / 2 - this.circle.radius / 2 });
+        this.velocity = { x: 1, y: 0 };
+        if (getRandomInt(0, 2) == 0) this.velocity.x = -1;
+        this.speed = 1;
     }
 }
 

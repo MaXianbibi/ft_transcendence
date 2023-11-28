@@ -1,3 +1,27 @@
+function calculateBallAngle(ball, paddle) {
+    // Distance entre le centre de la balle et le centre de la raquette
+    let relativeY = (ball.circle.y - (paddle.rect.y + paddle.rect.height / 2));
+
+    // Normaliser cette distance en fonction de la hauteur de la raquette
+    let normalizedRelativeY = relativeY / (paddle.rect.height / 2);
+
+    // Calculer l'angle de base
+    let baseAngle = normalizedRelativeY * (Math.PI / 4);
+
+    // Ajuster l'angle en fonction de la direction actuelle de la balle
+    let adjustedAngle;
+    if (ball.velocity.x > 0) {
+        // La balle se déplace vers la droite
+        adjustedAngle = Math.PI - baseAngle;
+    } else {
+        // La balle se déplace vers la gauche
+        adjustedAngle = baseAngle;
+    }
+
+    return adjustedAngle;
+}
+
+
 class Scene {
     constructor({ canvas, ctx }) {
 
@@ -8,6 +32,9 @@ class Scene {
         this.backgroundColor = "white";
 
         this.gameOn = false;
+
+
+        this.nplayer = 2;
 
     }
 
@@ -34,15 +61,75 @@ class Scene {
             }
         }
 
+
         for (let object of this.objects) {
-            if (typeof object.draw === 'function') {
-                object.draw(this.ctx);
+            if (typeof object.circle.draw === 'function') {
+                object.circle.draw(this.ctx);
             }
         }
 
     }
 
+    gameLogic2Player() {
+
+
+        
+        
+        if (this.nplayer == 2) {
+            if (this.objects.length == 0) return;
+            const ball = this.objects[0];
+            
+            // debug
+             
+
+            const player = this.elements[0];
+            const player2 = this.elements[1];
+
+            if (ball.speed > 15) ball.speed = 15;
+
+            if (ball.circle.x + ball.circle.radius > this.canvas.width) {
+                console.log("player 2 win");
+                ball.reset();
+            }
+            else if (ball.circle.x < 0) {
+                ball.reset();
+            }
+
+            if (ball.circle.y + ball.circle.radius > this.canvas.height) {
+                ball.velocity.y = ball.velocity.y * -1;
+            }
+            else if (ball.circle.y < 0) {
+                ball.velocity.y = ball.velocity .y * -1;
+            }
+            if (ball.circle.x - ball.circle.radius < player.rect.x + player.rect.width && ball.circle.y + ball.circle.radius > player.rect.y && ball.circle.y - ball.circle.radius  < player.rect.y + player.rect.height) { 
+                let angle = calculateBallAngle(ball, player);
+
+                ball.velocity.x = Math.cos(angle);
+                ball.velocity.y = Math.sin(angle);
+
+                ball.speed = ball.speed + 0.5;
+
+
+
+
+            }
+            else if (ball.circle.x + ball.circle.radius > player2.rect.x && ball.circle.y + ball.circle.radius > player2.rect.y && ball.circle.y - ball.circle.radius  < player2.rect.y + player2.rect.height) {
+                let angle = calculateBallAngle(ball, player2);
+
+                
+                ball.velocity.x = Math.cos(angle);
+                ball.velocity.y = Math.sin(angle);
+
+                ball.speed = ball.speed + 0.5;
+
+
+            }
+
+        }
+    }
+
     run() {
+        this.gameLogic2Player();
         this.draw();
     }
 }
@@ -89,8 +176,7 @@ class Rectangle extends DrawableElement {
         this.y = y;
     }
 }
-class Circle extends DrawableElement
-{
+class Circle extends DrawableElement {
     constructor(x, y, width, color) {
         super(x, y);
         this.radius = width
@@ -107,7 +193,7 @@ class Circle extends DrawableElement
 
     }
 
-    setSize({ width}) {
+    setSize({ width }) {
         this.radius = width;
     }
 

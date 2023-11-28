@@ -48,8 +48,8 @@ class Canvas {
         });
 
         objects.forEach(object => {
-            object.setSize({width : this.size.x * 0.012});
-            object.setPosition({ x: this.size.x / 2 - object.radius / 2, y: this.size.y / 2 - object.radius / 2 });
+            object.circle.setSize({width : this.size.x * 0.012});
+            object.circle.setPosition({ x: this.size.x / 2 - object.circle.radius / 2, y: this.size.y / 2 - object.circle.radius / 2 });
         });
 
 
