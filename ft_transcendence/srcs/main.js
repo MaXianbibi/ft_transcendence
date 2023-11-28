@@ -5,6 +5,8 @@ import { githubVersion } from "./tools/githubAPI.js";
 import { Player } from "./class/Player.js";
 import { Ball } from './class/Balls.js';
 
+import { spashScreen } from './tools/splashScreen.js';
+
 let keysPressed = {};
 
 function setupGame({ scene, canvas, rect }) {
@@ -99,40 +101,17 @@ function mainGame() {
     scene.run();
     requestAnimationFrame(gameLoop);
   }
-
-
   requestAnimationFrame(gameLoop);
-
-
-
-
 }
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
   mainGame();
   githubVersion();
-
-  let loaded = false;
-  let minimumTimeMet = false;
-
-  setTimeout(() => {
-    minimumTimeMet = true;
-    if (loaded) fadeOutLoadingScreen();
-  }, 1000);
-
-  window.onload = function () {
-    loaded = true;
-    if (minimumTimeMet) fadeOutLoadingScreen();
-  };
+  spashScreen();
 });
-
-function fadeOutLoadingScreen() {
-  const loadingScreen = document.getElementById('loadingScreen');
-  loadingScreen.style.opacity = '0';
-
-  setTimeout(() => {
-    loadingScreen.style.display = 'none';
-  }, 250);
-}
 
 

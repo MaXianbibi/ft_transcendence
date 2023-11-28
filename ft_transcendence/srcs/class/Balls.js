@@ -37,7 +37,9 @@ class Ball {
         this.circle.setPosition({ x: this.sceneSize.x / 2 - this.circle.radius / 2, y: this.sceneSize.y / 2 - this.circle.radius / 2 });
         this.velocity = { x: 1, y: 0 };
         if (getRandomInt(0, 2) == 0) this.velocity.x = -1;
-        this.speed = 1;
+
+        this.speed = this.speed / 2;
+        if (this.speed < 1) this.speed = 1;
     }
 }
 

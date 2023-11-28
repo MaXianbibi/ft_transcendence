@@ -71,10 +71,6 @@ class Scene {
     }
 
     gameLogic2Player() {
-
-
-        
-        
         if (this.nplayer == 2) {
             if (this.objects.length == 0) return;
             const ball = this.objects[0];
@@ -85,10 +81,9 @@ class Scene {
             const player = this.elements[0];
             const player2 = this.elements[1];
 
-            if (ball.speed > 15) ball.speed = 15;
+            if (ball.speed > 30) ball.speed = 30;
 
             if (ball.circle.x + ball.circle.radius > this.canvas.width) {
-                console.log("player 2 win");
                 ball.reset();
             }
             else if (ball.circle.x < 0) {
