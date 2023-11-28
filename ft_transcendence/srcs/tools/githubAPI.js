@@ -1,19 +1,11 @@
 function githubVersion() {
 
-        const owner = 'MaXianbibi'; // Remplacez par le nom du propriétaire du référentiel
-        const repo = 'ft_transcendence'; // Remplacez par le nom du référentiel
-        const branch = 'main'; // Branche principale
+        const owner = 'MaXianbibi'; 
+        const repo = 'ft_transcendence'; 
+        const branch = 'main'; 
 
 
         const apiUrl = `https://api.github.com/repos/${owner}/${repo}/commits/${branch}`;
-
-
-        // let doc = document.getElementById('githubInfo').innerHTML;
-
-        // doc = "yoo"
-
-
-        // sleep(1000)
 
         fetch(apiUrl)
             .then(response => response.json())

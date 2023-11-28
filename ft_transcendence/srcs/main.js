@@ -27,13 +27,10 @@ function setupGame({ scene, canvas, rect }) {
   player2.keySetup({ keyPressed: keysPressed, listofKeys: keys });;
 
   // INIT BALL
-
-  // const ball 
-  const ball = new Ball({ canvas });
-
-
-
-  scene.addObjects(ball);
+  
+  for (let i = 0; i < scene.settings.nBalls; i++) {
+    scene.addObjects(new Ball({ canvas }));
+  }
   scene.addElement(player);
   scene.addElement(player2);
 
@@ -62,7 +59,7 @@ function setupGame({ scene, canvas, rect }) {
 
   });
 
-  return ball;
+  // return ball;
 
 }
 
@@ -79,7 +76,7 @@ function mainGame() {
 
   // INIT AND SETUP GAME
   const [scene, canvas] = initGame();
-  const ball = setupGame({ scene, canvas });
+setupGame({ scene, canvas });
 
 
   // GAME LOOP
@@ -95,8 +92,21 @@ function mainGame() {
           }
         }
       }
-      ball.run();
       
+      
+      scene.objects.forEach(object => {
+        object.run()
+      });
+      
+    }
+    
+    if (scene.objects != scene.settings.nBalls) {
+      if (scene.objects.length < scene.settings.nBalls) {
+        scene.addObjects(new Ball({ canvas }));
+      }
+      else if (scene.objects.length > scene.settings.nBalls) {
+        scene.objects.pop();
+      }
     }
     scene.run();
     requestAnimationFrame(gameLoop);
