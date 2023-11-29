@@ -32,17 +32,18 @@ class Scene {
         this.canvas = canvas;
         this.ctx = ctx;
         this.elements = []; // player
-        this.objects = []; // other
+        this.objects = []; // balls 
         this.backgroundColor = "white";
 
         this.gameOn = false;
-
-
         this.nplayer = 2;
-
         this.settings = settings;
-
         this.firstRun = false;
+
+
+        this.playerWin = { hasWin: false, text : ""};
+
+
 
     }
 
@@ -85,6 +86,17 @@ class Scene {
             
             this.ctx.fillText(this.elements[0].score, this.canvas.width / 8, this.canvas.height / 8); // Écrit le texte sur le canvas
             this.ctx.fillText(this.elements[1].score, this.canvas.width / 1.1, this.canvas.height / 8); // Écrit le texte sur le canvas
+            
+            if (this.playerWin.hasWin) {
+                // aucun rapport avec du draw mais cetait le plus conveniant
+                this.firstRun = false;
+
+                this.ctx.fillText("Press space to play again !", this.canvas.width / 2 - this.ctx.measureText("Press space to play again !").width / 2, this.canvas.height / 3); // Écrit le texte sur le canvas
+
+                this.ctx.font = '50px Arial'; // Définit la taille et la police du texte
+                this.ctx.fillStyle = 'black'; // Définit la couleur du texte
+                this.ctx.fillText(this.playerWin.text, this.canvas.width / 2 - this.ctx.measureText(this.playerWin.text).width / 2, this.canvas.height / 3.5); // Écrit le texte sur le canvas
+            }
         }
 
     }
@@ -114,11 +126,28 @@ class Scene {
                 if (ball.speed > 30) ball.speed = 30;
 
                 if (ball.circle.x + ball.circle.radius > this.canvas.width) {
+
+
                     player.updateScore();
+
+                    if (player.score >= this.settings.nWin  && this.settings.isNWin) 
+                    {
+                        this.playerWin.hasWin = true;
+                        this.playerWin.text = "Player 1 win";
+                        this.gameOn = false;
+                    }
                     ball.reset();
                 }
                 else if (ball.circle.x < 0) {
                     player2.updateScore();
+
+                    if (player2.score >= this.settings.nWin && this.settings.isNWin) 
+                    {
+                        this.playerWin.hasWin = true;
+                        this.playerWin.text = "Player 2 win";
+                        this.gameOn = false;
+                    }
+
                     ball.reset();
                 }
 

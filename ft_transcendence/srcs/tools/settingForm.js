@@ -46,8 +46,8 @@ isNWin.addEventListener("change", function() {
 
 });
 
-nWin.addEventListener("change", function() {
-    console.log("dsa")
+nWin.addEventListener("input", function() {
+    newSettings.nWin = nWin.value;
 });
 
 

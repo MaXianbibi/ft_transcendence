@@ -63,9 +63,21 @@ function setupGame({ scene, canvas, rect }) {
 
 
     if (event.key === ' ') {
+      console.log("sa")
       event.preventDefault()
       scene.gameOn = !scene.gameOn;
       scene.firstRun = true;
+      
+
+      if (scene.playerWin.hasWin) {
+        scene.playerWin.hasWin = false;
+        scene.playerWin.text = "";
+        scene.elements.forEach(element => {
+
+          element.score = 0;
+        });
+
+      }
 
       return;
     }
