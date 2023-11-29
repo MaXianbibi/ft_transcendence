@@ -30,6 +30,61 @@ function setupGame({ scene, canvas, rect }) {
   
   for (let i = 0; i < scene.settings.nBalls; i++) {
     scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
+    scene.addObjects(new Ball({ canvas }));
   }
   scene.addElement(player);
   scene.addElement(player2);
@@ -40,10 +95,11 @@ function setupGame({ scene, canvas, rect }) {
   window.addEventListener('resize', () => { canvas.run({ elements: scene.elements, objects : scene.objects }) });
 
   window.addEventListener('keydown', (event) => {
+    
     event.preventDefault()
-
     if (event.key === ' ') {
       scene.gameOn = !scene.gameOn;
+
       return;
     }
 
@@ -99,7 +155,7 @@ setupGame({ scene, canvas });
       });
       
     }
-    
+
     if (scene.objects != scene.settings.nBalls) {
       if (scene.objects.length < scene.settings.nBalls) {
         scene.addObjects(new Ball({ canvas }));

@@ -71,6 +71,19 @@ class Scene {
                 object.circle.draw(this.ctx);
             }
         }
+        
+        if (this.settings.nPlayers == 2) {
+            if (this.elements.length == 0) return; 
+
+
+            this.ctx.font = '20px Arial'; // Définit la taille et la police du texte
+            this.ctx.fillStyle = 'black'; // Définit la couleur du texte
+            
+
+            
+            this.ctx.fillText(this.elements[0].score, this.canvas.width / 8, this.canvas.height / 8); // Écrit le texte sur le canvas
+            this.ctx.fillText(this.elements[1].score, this.canvas.width / 1.1, this.canvas.height / 8); // Écrit le texte sur le canvas
+        }
 
     }
 
@@ -80,6 +93,13 @@ class Scene {
 
             if (this.objects.length == 0) return;
             this.objects.forEach(object => {
+
+
+
+
+
+
+
 
                 const ball = object;
 
@@ -92,9 +112,11 @@ class Scene {
                 if (ball.speed > 30) ball.speed = 30;
 
                 if (ball.circle.x + ball.circle.radius > this.canvas.width) {
+                    player.updateScore();
                     ball.reset();
                 }
                 else if (ball.circle.x < 0) {
+                    player2.updateScore();
                     ball.reset();
                 }
 
@@ -128,6 +150,11 @@ class Scene {
     run() {
         this.gameLogic2Player();
         this.draw();
+
+        
+
+
+
     }
 }
 
