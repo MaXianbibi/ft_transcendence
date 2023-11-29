@@ -42,6 +42,8 @@ class Scene {
 
         this.settings = settings;
 
+        this.firstRun = false;
+
     }
 
     setBackground(color) {

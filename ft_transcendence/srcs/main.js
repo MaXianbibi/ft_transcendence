@@ -30,61 +30,6 @@ function setupGame({ scene, canvas, rect }) {
   
   for (let i = 0; i < scene.settings.nBalls; i++) {
     scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
-    scene.addObjects(new Ball({ canvas }));
   }
   scene.addElement(player);
   scene.addElement(player2);
@@ -92,27 +37,50 @@ function setupGame({ scene, canvas, rect }) {
 
   // EVENT LISTENERS
 
+
+  const settingButton = document.getElementById('setting-button');
+  settingButton.addEventListener("click", function() {
+    scene.gameOn = false;
+  });
+
+  const saveButton = document.getElementById("saveChangesButton");
+  saveButton.addEventListener("click", function() {
+    if (scene.firstRun) scene.gameOn = true;
+
+
+  });
+
+  const cancelButton = document.getElementById("cancel-button");
+  cancelButton.addEventListener("click", function() {
+    if (scene.firstRun) scene.gameOn = true;
+  });
+
+
+
   window.addEventListener('resize', () => { canvas.run({ elements: scene.elements, objects : scene.objects }) });
 
   window.addEventListener('keydown', (event) => {
-    
-    event.preventDefault()
+
+
     if (event.key === ' ') {
+      event.preventDefault()
       scene.gameOn = !scene.gameOn;
+      scene.firstRun = true;
 
       return;
     }
 
     if (keysPressed[event.key] === undefined) return;
+
+    event.preventDefault()
     keysPressed[event.key].keyUp = true;
 
   });
 
   window.addEventListener('keyup', (event) => {
-    event.preventDefault()
     if (keysPressed[event.key] === undefined) return;
+    event.preventDefault()
     keysPressed[event.key].keyUp = false;
-
   });
 
   // return ball;
@@ -164,6 +132,8 @@ setupGame({ scene, canvas });
         scene.objects.pop();
       }
     }
+
+    
     scene.run();
     requestAnimationFrame(gameLoop);
   }

@@ -72,7 +72,7 @@
         <h1 id="title-game-pong">PONG</h1>
 
 
-        <button type="button" class="btn btn-secondary myButton " data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-secondary myButton " data-bs-toggle="modal" data-bs-target="#exampleModal" id="setting-button">
           Settings
         </button>
 
@@ -81,11 +81,8 @@
       <div class="card" id="githubContainer">
         <div class="card-body" id="githubInfo">
         </div>
-
-
-
-
       </div>
+
       <div id="game-contianer">
         <canvas id="pong" width="900px" height="675px"></canvas>
       </div>
@@ -156,7 +153,7 @@
               ...
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="cancel-button">Cancel</button>
               <button type="button" class="btn btn-primary" id="saveChangesButton" data-bs-dismiss="modal">Save
                 changes</button>
             </div>
