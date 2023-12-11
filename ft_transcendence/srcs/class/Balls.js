@@ -9,19 +9,21 @@ function getRandomInt(min, max) {
 class Ball {
     constructor({canvas}) {
         this.circle = new Circle(canvas.size.x / 2 - 10 / 2 + getRandomInt(-10, 10), canvas.size.y / 2 - 10 / 2 + getRandomInt(-50, 50), canvas.size.x * 0.012, '#3B3979');
-        this.velocity = { x: 1, y: 0 };
-
-
-
+        
+        this.baseSpeed = 1;        
+        this.speed = getRandomInt(1, 3) * this.baseSpeed;
+        
+        this.velocity = { x: this.speed, y: 0 };
         if (getRandomInt(0, 2) == 0) this.velocity.x = -1;
 
         this.sceneSize = canvas.size; 
-        this.speed = getRandomInt(1, 3);
+
+        this.acceleration = 0.1;
     }
 
 
     move() {
-        this.circle.setPosition({ x: this.circle.x + this.velocity.x * this.speed, y: this.circle.y + this.velocity.y * this.speed });
+        this.circle.setPosition({ x: this.circle.x + this.velocity.x * (this.speed * this.baseSpeed), y: this.circle.y + this.velocity.y * (this.speed * this.baseSpeed)});
     }
 
     run () {

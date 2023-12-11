@@ -6,10 +6,15 @@ class Player {
         this.score = 0;
         
         this.offset = x;
-        this.rect.setSize({ width: canvas.size.x / 70, height: canvas.size.y / 5 });
-        this.rect.setPosition({ x: canvas.size.x / 70 + this.offset, y: canvas.size.y / 2 - this.rect.height / 5 });
+
+        this.paddleSize = 5
+
+        this.rect.setSize({ width: canvas.size.x / 70, height: canvas.size.y / this.paddleSize });
+        this.rect.setPosition({ x: canvas.size.x / 70 + this.offset, y: canvas.size.y / 2 - this.rect.height / this.paddleSize });
         this.sceneSize = canvas.size;
 
+
+        this.speed = 10;
         this.marginRatio =  0.02 ;
 
     }
@@ -19,11 +24,11 @@ class Player {
     }
 
     moveUp() {
-        if (this.rect.y > this.sceneSize.y * this.marginRatio) this.rect.move({ x: 0, y: -10 });
+        if (this.rect.y > this.sceneSize.y * this.marginRatio) this.rect.move({ x: 0, y: -this.speed });
     }
 
     moveDown() {
-        if (this.rect.y + this.rect.height < this.sceneSize.y - this.sceneSize.y * this.marginRatio) this.rect.move({ x: 0, y: 10 });
+        if (this.rect.y + this.rect.height < this.sceneSize.y - this.sceneSize.y * this.marginRatio) this.rect.move({ x: 0, y: this.speed });
     }
 
 
@@ -36,6 +41,13 @@ class Player {
             console.error("listofKeys does not have enough elements");
         }
     }
+
+    resize( canva ) {
+        this.rect.setSize({ width: canva.size.x / 70, height: canva.size.y / this.paddleSize });
+        this.rect.setPosition({ x: canva.size.x / 70 + this.offset, y: canva.size.y / 2 - this.rect.height / this.paddleSize });
+
+    }
+
 
     get getRect() {
         return this.rect;

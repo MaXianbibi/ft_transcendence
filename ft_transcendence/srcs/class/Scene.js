@@ -42,9 +42,6 @@ class Scene {
 
 
         this.playerWin = { hasWin: false, text : ""};
-
-
-
     }
 
     setBackground(color) {

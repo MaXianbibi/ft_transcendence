@@ -26,8 +26,11 @@ function setupGame({ scene, canvas, rect }) {
   keys = ['ArrowUp', 'ArrowDown'];
   player2.keySetup({ keyPressed: keysPressed, listofKeys: keys });;
 
+
+  player.paddleSize = scene.settings.paddleSize;
+
   // INIT BALL
-  
+
   for (let i = 0; i < scene.settings.nBalls; i++) {
     scene.addObjects(new Ball({ canvas }));
   }
@@ -39,25 +42,25 @@ function setupGame({ scene, canvas, rect }) {
 
 
   const settingButton = document.getElementById('setting-button');
-  settingButton.addEventListener("click", function() {
+  settingButton.addEventListener("click", function () {
     scene.gameOn = false;
   });
 
   const saveButton = document.getElementById("saveChangesButton");
-  saveButton.addEventListener("click", function() {
+  saveButton.addEventListener("click", function () {
     if (scene.firstRun) scene.gameOn = true;
 
 
   });
 
   const cancelButton = document.getElementById("cancel-button");
-  cancelButton.addEventListener("click", function() {
+  cancelButton.addEventListener("click", function () {
     if (scene.firstRun) scene.gameOn = true;
   });
 
 
 
-  window.addEventListener('resize', () => { canvas.run({ elements: scene.elements, objects : scene.objects }) });
+  window.addEventListener('resize', () => { canvas.run({ elements: scene.elements, objects: scene.objects }) });
 
   window.addEventListener('keydown', (event) => {
 
@@ -67,7 +70,7 @@ function setupGame({ scene, canvas, rect }) {
       event.preventDefault()
       scene.gameOn = !scene.gameOn;
       scene.firstRun = true;
-      
+
 
       if (scene.playerWin.hasWin) {
         scene.playerWin.hasWin = false;
@@ -112,7 +115,7 @@ function mainGame() {
 
   // INIT AND SETUP GAME
   const [scene, canvas] = initGame();
-setupGame({ scene, canvas });
+  setupGame({ scene, canvas });
 
 
   // GAME LOOP
@@ -128,14 +131,15 @@ setupGame({ scene, canvas });
           }
         }
       }
-      
-      
+
+
       scene.objects.forEach(object => {
         object.run()
       });
-      
+
     }
 
+    // ball update
     if (scene.objects != scene.settings.nBalls) {
       if (scene.objects.length < scene.settings.nBalls) {
         scene.addObjects(new Ball({ canvas }));
@@ -145,7 +149,26 @@ setupGame({ scene, canvas });
       }
     }
 
-    
+    if (scene.settings.ballSpeed != scene.objects[0].baseSpeed)
+      scene.objects.forEach(object => {
+        object.baseSpeed = scene.settings.ballSpeed;
+      }); 
+
+    // player update
+    if (scene.settings.paddleSize != scene.elements[0].paddleSize) {
+      scene.elements.forEach(element => {
+        element.paddleSize = scene.settings.paddleSize;
+        element.resize(canvas);
+      })
+    }
+
+    if (scene.settings.paddleSpeed != scene.elements[0].speed) {
+      scene.elements.forEach(element => {
+        element.speed = scene.settings.paddleSpeed;
+      })
+    };
+
+
     scene.run();
     requestAnimationFrame(gameLoop);
   }

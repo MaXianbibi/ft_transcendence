@@ -119,7 +119,7 @@
 
               <form id="myForm">
                 <label for="nBalls" class="form-label label-range-container">
-                  <span>Number of Balls</span>
+                  <span>Number of balls</span>
                   <span id="nBallsResult">1</span>
                 </label>
                 <input value="1" type="range" class="form-range" min="1" max="10" id="nBalls">
@@ -129,7 +129,7 @@
               <form>
                 <div class="input-group mb-3">
                   <label for="nWin" class="form-label label-range-container">
-                    <span>Number of Wins (uncheck for unlimited)</span>
+                    <span>Number of wins (uncheck for unlimited)</span>
                   </label>
                   <div class="input-group-text">
                     <input class="form-check-input mt-0" type="checkbox" value="" checked
@@ -142,6 +142,31 @@
               </form>
 
 
+              <form id="myForm">
+                <label for="paddle-size-input" class="form-label label-range-container">
+                  <span>Size of paddle</span>
+                  <span id="paddle-size-title">small</span>
+                </label>
+                <input value="1" type="range" class="form-range" min="0" max="4" id="paddle-size-input">
+              </form>
+
+
+              <form id="myForm">
+                <label for="paddle-size-input" class="form-label label-range-container">
+                  <span>Speed of paddle</span>
+                  <span id="paddle-speed-title">medium</span>
+                </label>
+                <input value="2" type="range" class="form-range" min="0" max="4" id="paddle-speed-input">
+              </form>
+
+
+              <form id="myForm">
+                <label for="ball-speed-input" class="form-label label-range-container">
+                  <span>Speed of ball(s)</span>
+                  <span id="ball-speed-title">medium</span>
+                </label>
+                <input value="2" type="range" class="form-range" min="0" max="4" id="ball-speed-input">
+              </form>
 
 
 
@@ -150,7 +175,7 @@
 
 
 
-              ...
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="cancel-button">Cancel</button>
